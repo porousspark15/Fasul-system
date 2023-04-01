@@ -1,0 +1,33 @@
+<form action="processa_dados.php" method="POST">
+  <label for="valor_nf">Valor da Nota Fiscal:</label>
+  <input type="text" id="valor_nf" name="valor_nf"><br>
+
+  <label for="peso_material">Peso do Material:</label>
+  <input type="text" id="peso_material" name="peso_material"><br>
+
+  <label for="data_emissao">Data de Emissão:</label>
+  <input type="date" id="data_emissao" name="data_emissao"><br>
+
+  <input type="submit" value="Enviar">
+</form>
+<?php
+$valor_nf = $_POST['valor_nf'];
+$peso_material = $_POST['peso_material'];
+$data_emissao = $_POST['data_emissao'];
+
+// Validação dos dados
+if (empty($valor_nf) || empty($peso_material) || empty($data_emissao)) {
+  echo "Por favor, preencha todos os campos!";
+} else {
+  // Conexão com o banco de dados e inserção dos dados
+  // Aqui é necessário utilizar a biblioteca apropriada para a conexão com o banco de dados que você está utilizando
+  $conn = new mysqli('localhost', 'usuario', 'senha', 'nome_do_banco');
+  $sql = "INSERT INTO notas_fiscais (valor_nf, peso_material, data_emissao) VALUES ('$valor_nf', '$peso_material', '$data_emissao')";
+  if ($conn->query($sql) === TRUE) {
+    echo "Dados inseridos com sucesso!";
+  } else {
+    echo "Erro ao inserir os dados: " . $conn->error;
+  }
+  $conn->close();
+}
+?>
